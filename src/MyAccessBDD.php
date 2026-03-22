@@ -50,6 +50,10 @@ class MyAccessBDD extends AccessBDD {
                 return $this->getListeCommandes($champs);
             case "niveaux_suivi" :
                 return $this->getNiveauxSuivi();
+            case "abonnements_revue":
+                return $this->getAbonnementsRevue($champs);
+            case "abonnements_expirants":
+                return $this->getAbonnementsExpirants();
             case "" :
                 // return $this->uneFonction(parametres);
             default:
@@ -90,6 +94,30 @@ class MyAccessBDD extends AccessBDD {
                     }
                 }
                 return null;
+            
+            case "gestion_abonnement":
+                $id = $this->creerIdAuto();
+                $res1 = $this->insertOneTupleOneTable("commande",[
+                    "id" => $id, 
+                    "dateCommande" => $champs["dateCommande"], 
+                    "montant" => $champs["montant"]
+                ]);
+
+                if ($res1 !== null) {
+                    $res2 = $this->insertOneTupleOneTable("abonnement",[
+                        "id" => $id, 
+                        "dateFinAbonnement" => $champs["dateFinAbonnement"], 
+                        "idRevue" => $champs["idRevue"]
+                    ]);
+
+                    if ($res2 !== null) {
+                        return 1;
+                    } else {
+                        $this->deleteTuplesOneTable("commande",["id" => $id]);
+                        return null;
+                    }
+                }
+                return null;
                 
             default:                    
                 return $this->insertOneTupleOneTable($table, $champs);	
@@ -125,6 +153,13 @@ class MyAccessBDD extends AccessBDD {
         switch($table){
             case "" :
                 // return $this->uneFonction(parametres);
+            case "gestion_abonnement":
+                $res1 = $this->deleteTuplesOneTable("abonnement",["id" => $champs["id"]]);
+                if ($res1 !== null) {
+                    $this->deleteTuplesOneTable("commande", ["id" => $champs["id"]]);
+                    return 1;
+                }
+                return null;
             default:                    
                 // cas général
                 return $this->deleteTuplesOneTable($table, $champs);	
@@ -336,6 +371,32 @@ class MyAccessBDD extends AccessBDD {
     */
     private function getNiveauxSuivi() : ?array {
         $sql = "SELECT * FROM etape_suivi ORDER BY rang ASC;";
+        return $this->conn->queryBDD($sql);
+    }
+    
+    /**
+     * Récupère l'historique des abonnements d'une revue
+     * @param array|null $champs
+     * @return array|null
+     */
+    private function getAbonnementsRevue(?array $champs) : ?array {
+        if (empty($champs) || !array_key_exists('id', $champs)) return null;
+        $sql = "SELECT a.id, c.dateCommande, c.montant, a.dateFinAbonnement, a.idRevue ";
+        $sql .= "FROM abonnement a JOIN commande c ON c.id = a.id ";
+        $sql .= "WHERE a.idRevue = :id ORDER BY c.dateCommande DESC";
+        return $this->conn->queryBDD($sql,['id' => $champs['id']]);
+    }
+
+    /**
+     * Récupère les abonnements expirant dans moins de 30 jours
+     * @return array|null
+     */
+    private function getAbonnementsExpirants() : ?array {
+        $sql = "SELECT a.id, c.dateCommande, c.montant, a.dateFinAbonnement, a.idRevue, d.titre as Titre ";
+        $sql .= "FROM abonnement a JOIN commande c ON c.id = a.id ";
+        $sql .= "JOIN document d ON a.idRevue = d.id ";
+        $sql .= "WHERE DATEDIFF(a.dateFinAbonnement, CURDATE()) BETWEEN 0 AND 30 ";
+        $sql .= "ORDER BY a.dateFinAbonnement ASC";
         return $this->conn->queryBDD($sql);
     }
     
