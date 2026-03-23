@@ -54,6 +54,8 @@ class MyAccessBDD extends AccessBDD {
                 return $this->getAbonnementsRevue($champs);
             case "abonnements_expirants":
                 return $this->getAbonnementsExpirants();
+            case "authentification":
+                 return $this->getAuthentification($champs);
             case "" :
                 // return $this->uneFonction(parametres);
             default:
@@ -398,6 +400,24 @@ class MyAccessBDD extends AccessBDD {
         $sql .= "WHERE DATEDIFF(a.dateFinAbonnement, CURDATE()) BETWEEN 0 AND 30 ";
         $sql .= "ORDER BY a.dateFinAbonnement ASC";
         return $this->conn->queryBDD($sql);
+    }
+    
+    /**
+     * Vérifie les identifiants d'un utilisateur
+     * Retourne les informations de l'utilisateur et son service si ok, sinon null
+     * @param array|null $champs
+     * @return array|null
+     */
+    private function getAuthentification(?array $champs) : ?array {
+        if (empty($champs) || !array_key_exists('login', $champs) || !array_key_exists('password', $champs)) {
+            return null;
+        }
+        // Récupération de  l'utilisateur et du libellé de son service grâce à une jointure
+        $sql = "SELECT u.id, u.login, u.idService, s.libelle as service ";
+        $sql .= "FROM utilisateur u JOIN service s ON u.idService = s.id ";
+        $sql .= "WHERE u.login = :login AND u.password = :password";
+        
+        return $this->conn->queryBDD($sql, ['login' => $champs['login'], 'password' => $champs['password']]);
     }
     
     
