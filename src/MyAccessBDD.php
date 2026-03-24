@@ -340,7 +340,7 @@ class MyAccessBDD extends AccessBDD {
     }
     
     /**
-     * 
+     * récupère liste des commandes
      * @param array|null $champs
      * @return array|null
      */
@@ -353,7 +353,7 @@ class MyAccessBDD extends AccessBDD {
     }
     
     /**
-     * 
+     * créer l'id
      * @return string
      */
     private function creerIdAuto() : string {
