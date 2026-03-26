@@ -1,5 +1,5 @@
 <h1>Présentation de l'API</h1>
-La présentation de l'API d'origine est disponible sur le [dépôt officiel initial](https://github.com/CNED-SLAM/rest_mediatekdocuments). Ce document présente uniquement les évolutions techniques.
+La présentation de l'API d'origine est disponible sur le dépôt officiel initial (https://github.com/CNED-SLAM/rest_mediatekdocuments). Ce document présente uniquement les évolutions techniques.
 
 
 ##  Nouvelles Fonctionnalités Backend
