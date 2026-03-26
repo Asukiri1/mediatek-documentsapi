@@ -8,16 +8,17 @@ La présentation de l'API d'origine est disponible sur le [dépôt officiel init
 * **Transactions SQL :** L'API gère désormais les doubles insertions (ex: création d'une Commande puis de ses détails d'Abonnement). En cas d'échec d'une sous-requête, un `rollBack` garantit l'absence de données orphelines.
 * **Exceptions Métier :** Création d'une `AppException` permettant d'intercepter les erreurs renvoyées par les Triggers MySQL et de retourner des messages d'erreurs HTTP 400 personnalisés au client.
 
-### 2. Nouvelles Routes
+###  Nouvelles Routes
 * `/authentification` : Vérifie les identifiants en base et retourne le profil de l'employé avec jointure de son service.
 * `/gestion_cmd` et `/gestion_abonnement` : Centralisent les opérations  liées aux commandes avec génération automatique des identifiants (`0000X`).
 * `/abonnements_expirants` : Retourne les abonnements expirant dans moins de 30 jours.
 
-### 3. Sécurité Renforcée
+###  Sécurité Renforcée
 * Modification du `.htaccess` pour bloquer  l'accès direct et vide à la racine du répertoire.
 * Support du déploiement en ligne via la conservation des en-têtes d'autorisation (contournement des restrictions d'hébergeurs mutualisés).
 
 <h1>Installation de l'API en local</h1>
+
 * Environnement : Installez un serveur local type WampServer.
 * Déploiement : Clonez ou téléchargez ce dépôt et placez le contenu dans le dossier `www/rest_mediatekdocuments`.
 * Dépendances : Ouvrez un terminal dans ce dossier et lancez la commande `composer install`.
