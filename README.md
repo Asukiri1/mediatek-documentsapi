@@ -34,3 +34,6 @@ La présentation de l'API d'origine est disponible sur le [dépôt officiel init
 * BDD_BD=mediatek86
 * BDD_SERVER=localhost
 * BDD_PORT=3306
+
+<h1>Documentation Technique</h1>
+La documentation Technique est disponible dans le dossier DocumentationTechnique du projet
