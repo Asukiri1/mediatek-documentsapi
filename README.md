@@ -18,18 +18,18 @@ La présentation de l'API d'origine est disponible sur le [dépôt officiel init
 * Support du déploiement en ligne via la conservation des en-têtes d'autorisation (contournement des restrictions d'hébergeurs mutualisés).
 
 <h1>Installation de l'API en local</h1>
-1. Environnement : Installez un serveur local type WampServer.
-2. Déploiement : Clonez ou téléchargez ce dépôt et placez le contenu dans le dossier `www/rest_mediatekdocuments`.
-3. Dépendances : Ouvrez un terminal dans ce dossier et lancez la commande `composer install`.
-4. Base de données :
-   * Créez une base nommée `mediatek86` dans phpMyAdmin.
-   * Importez le fichier `mediatek86.sql` fourni à la racine de ce projet (il contient déjà les Triggers métiers et les tables d'authentification).
-   * Le .env doit ressembler à ça avec les modifications lié dans le C# de MediatekDockument pour l'utilisé avec l'application. Plus d'info ici: https://github.com/Asukiri1/mediatek-documents
-   * AUTHENTIFICATION=basic
-   * AUTH_USER=admin
-   * AUTH_PW=adminpwd
-   * BDD_LOGIN=root
-   * BDD_PWD=
-   * BDD_BD=mediatek86
-   * BDD_SERVER=localhost
-   * BDD_PORT=3306
+* Environnement : Installez un serveur local type WampServer.
+* Déploiement : Clonez ou téléchargez ce dépôt et placez le contenu dans le dossier `www/rest_mediatekdocuments`.
+* Dépendances : Ouvrez un terminal dans ce dossier et lancez la commande `composer install`.
+* Base de données :
+* Créez une base nommée `mediatek86` dans phpMyAdmin.
+* Importez le fichier `mediatek86.sql` fourni à la racine de ce projet (il contient déjà les Triggers métiers et les tables d'authentification).
+* Le .env doit ressembler à ça avec les modifications lié dans le C# de MediatekDockument pour l'utilisé avec l'application. Plus d'info ici: https://github.com/Asukiri1/mediatek-documents
+* AUTHENTIFICATION=basic
+* AUTH_USER=admin
+* AUTH_PW=adminpwd
+* BDD_LOGIN=root
+* BDD_PWD=
+* BDD_BD=mediatek86
+* BDD_SERVER=localhost
+* BDD_PORT=3306
